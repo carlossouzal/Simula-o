@@ -1,40 +1,38 @@
-
-#
-# Exemplo de script no software Octave
-#
-#
-
-
-
-#
-# Tarefa
-#
-# Você recebeu um arquivo de dados com uma matriz 50 x 50
-#
-#
-# Sua tarefa é a seguinte.
-#
-# Determine qual coluna dessa matriz tem a menor média de valores.
-#
-# Em seguida, considere que os valores nessa coluna correspondem a f(x),
-#  para x variando entre -1.2 e +1.5.
-#
-# Calcule três regressões; uma linear, outra com parábola
-#  e uma última usando um polinômio de grau 3.
-#
-#
-
-
-
-
-
+clear all
 clc
+close all
 
-printf ("\n\n\n-----------------------------------------------------------------------")
+matrix = csvread("dados-teste.csv");
+len = size(matrix)
 
-printf ("\n\n\nAbra o código de Tut6.m em um editor e leia a tarefa nele especificada.")
+maiorMediaIndex = 0;
+maiorMediaValor = 0;
+for k = 1:len(1)
+    soma = 0;
+    for j = 1:len(2)
+        soma = soma + matrix(k, j);
+    end
+    media = soma / len(2);
+    if(media > maiorMediaValor)
+        maiorMediaIndex = k;
+        maiorMediaValor = media;
+    end
+end
+maiorMediaIndex
+maiorMediaValor
 
-printf ("\n\n\n-----------------------------------------------------------------------\n")
+y = matrix(maiorMediaIndex, :);
+x = 1:len(1);
 
+pl = polyfit(x, y, 1);
+pq = polyfit(x, y, 2);
+pp = polyfit(x, y, 3);
 
+linear = ['y = ', num2str(pl(1), 4),  'x + ', num2str(pl(2), 4)];
+disp(linear);
 
+parabola = ['y = ', num2str(pq(1), 4),'x^2 + ', num2str(pq(2),4) 'x + ' num2str(pq(3),4)];
+disp(parabola);
+
+grauTres = ['y = ', num2str(pp(1), 4),'x^3 + ', num2str(pp(2), 4) 'x2 + ' num2str(pp(3), 4), 'x + ' num2str(pp(4), 4)];
+disp(grauTres);
